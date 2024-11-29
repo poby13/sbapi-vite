@@ -1,5 +1,7 @@
 package kr.co.cofile.sbapivite;
 
+import kr.co.cofile.sbapivite.dto.PageResponse;
+import kr.co.cofile.sbapivite.dto.TodoResponse;
 import kr.co.cofile.sbapivite.entity.Todo;
 import kr.co.cofile.sbapivite.mapper.TodoMapper;
 import lombok.extern.log4j.Log4j2;
@@ -8,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,7 +29,7 @@ public class TodoMapperTests {
             Todo todo = Todo.builder()
                     .title("제목..." + i)
                     .writer("user00")
-                    .dueDate(LocalDate.of(2024,12,24))
+                    .dueDate(LocalDate.of(2024, 12, 24))
                     .build();
 
             todoMapper.insertTodo(todo);
@@ -60,10 +64,38 @@ public class TodoMapperTests {
 
     @Test
     public void testDelete() {
-        Long tno= 59L;
+        Long tno = 59L;
         todoMapper.deleteTodoById(tno);
 
         Optional<Todo> result = todoMapper.selectTodoById(tno);
         assertTrue(result.isEmpty()); // Optional이 비어 있으면 테스트 통과
+    }
+
+    @Test
+    public void testPagination() {
+        int currentPage = 1;
+        int size = 10;
+        int totalElements = todoMapper.countTotalTodo();
+
+        int totalPages = (int) Math.ceil((double) totalElements / (double) size);
+
+        int offset = currentPage * size;
+        List<Todo> todos = todoMapper.selectAllTodo(offset, size);
+
+        List<TodoResponse> todoResponses = todos.stream()
+                .map(todo -> TodoResponse.builder()
+                        .tno(todo.getTno())
+                        .title(todo.getTitle())
+                        .writer(todo.getWriter())
+                        .complete(todo.getComplete())
+                        .dueDate(todo.getDueDate())
+                        .build())
+                .collect(Collectors.toList());
+
+        PageResponse<TodoResponse> pageResponse = new PageResponse<>(todoResponses, totalElements, currentPage, size);
+
+        log.info(pageResponse.getTotalElements());
+
+        pageResponse.getContent().stream().forEach(todoResponse -> log.info(todoResponse));
     }
 }

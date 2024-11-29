@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.Delete;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -24,4 +25,10 @@ public interface TodoMapper {
 
     @Delete("delete from tbl_todo where tno = #{tno}")
     void deleteTodoById(Long tno);
+
+    @Select("select * from tbl_todo limit #{offset}, #{size}")
+    List<Todo> selectAllTodo(int offset, int size);
+
+    @Select("SELECT count(*) FROM tbl_todo")
+    int countTotalTodo();
 }
