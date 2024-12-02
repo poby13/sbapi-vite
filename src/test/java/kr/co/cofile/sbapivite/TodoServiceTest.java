@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -40,7 +39,7 @@ public class TodoServiceTest {
 
     @Test
     public void testFindById() {
-        Long tno = 32L;
+        Long tno = 46L;
 
         TodoResponse todoResponse = todoService.findTodoById(tno);
 
@@ -49,7 +48,7 @@ public class TodoServiceTest {
 
     @Test
     public void testUpdateTodo() {
-        Long tno = 32L;
+        Long tno = 46L;
         TodoRequest todoRequest = TodoRequest.builder()
                 .title("샘플 타이틀")
                 .writer("홍길동")
@@ -65,9 +64,7 @@ public class TodoServiceTest {
         todoService.removeTodo(tno);
 
         // 런타임 예외가 발생하면 참
-        assertThrows(RuntimeException.class, () -> {
-            todoService.findTodoById(tno);
-        });
+        assertThrows(RuntimeException.class, () -> todoService.findTodoById(tno));
     }
 
     @Test

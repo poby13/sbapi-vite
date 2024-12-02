@@ -76,11 +76,10 @@ public class TodoMapperTests {
         int currentPage = 1;
         int size = 10;
         int totalElements = todoMapper.countTotalTodo();
-
-        int totalPages = (int) Math.ceil((double) totalElements / (double) size);
+        SortOrder sortOrder = SortOrder.DESC;
 
         int offset = currentPage * size;
-        List<Todo> todos = todoMapper.selectAllTodo(offset, size);
+        List<Todo> todos = todoMapper.selectAllTodo(sortOrder, offset, size);
 
         List<TodoResponse> todoResponses = todos.stream()
                 .map(todo -> TodoResponse.builder()
@@ -92,7 +91,7 @@ public class TodoMapperTests {
                         .build())
                 .collect(Collectors.toList());
 
-        PageResponse<TodoResponse> pageResponse = new PageResponse<>(todoResponses, totalElements, currentPage, size);
+        PageResponse<TodoResponse> pageResponse = new PageResponse<>(todoResponses, totalElements, currentPage, size, sortOrder);
 
         log.info(pageResponse.getTotalElements());
 
