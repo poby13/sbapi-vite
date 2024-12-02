@@ -17,7 +17,7 @@ public interface TodoMapper {
     Optional<Todo> selectTodoById(Long tno);
 
     @Update("update tbl_todo set title = #{title}, writer = #{writer}, due_date = #{dueDate} where tno = #{tno}")
-    void updateTodo(Todo todoRes);
+    void updateTodo(Todo todo);
 
     @Delete("delete from tbl_todo where tno = #{tno}")
     void deleteTodoById(Long tno);
