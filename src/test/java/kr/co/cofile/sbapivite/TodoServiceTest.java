@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite;
 
+import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
 import kr.co.cofile.sbapivite.service.TodoService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -63,7 +65,17 @@ public class TodoServiceTest {
 
         // 런타임 예외가 발생하면 참
         assertThrows(RuntimeException.class, () -> {
-           todoService.findTodoById(tno);
+            todoService.findTodoById(tno);
         });
+    }
+
+    @Test
+    public void testListTodo() {
+        PageRequest pageRequest = PageRequest.builder()
+                .page(1)
+                .build();
+        List<TodoResponse> todos = todoService.listTodo(pageRequest);
+
+        log.info(todos);
     }
 }
