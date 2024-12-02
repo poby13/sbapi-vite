@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite.service;
 
+import kr.co.cofile.sbapivite.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
@@ -63,7 +64,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public PageResponse<TodoResponse> listTodo(PageRequest pageRequest) {
 
-        List<Todo> todos = todoMapper.selectAllTodo(pageRequest.getOffset(), pageRequest.getSize());
+        List<Todo> todos = todoMapper.selectAllTodo(SortOrder.DESC, pageRequest.getOffset(), pageRequest.getSize());
         List<TodoResponse> todoResponses =  todos.stream()
                 .map(todo -> modelMapper.map(todo, TodoResponse.class))
                 .toList();
@@ -71,7 +72,8 @@ public class TodoServiceImpl implements TodoService {
         int totalElements = todoMapper.countTotalTodo();
         int currentPage = pageRequest.getPage();
         int size = pageRequest.getSize();
+        SortOrder sortOrder = pageRequest.getSortOrder();
 
-        return new PageResponse<>(todoResponses, totalElements, currentPage, size);
+        return new PageResponse<>(todoResponses, totalElements, currentPage, size, sortOrder);
     }
 }

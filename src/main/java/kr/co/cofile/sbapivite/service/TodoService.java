@@ -5,8 +5,6 @@ import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
 
-import java.util.List;
-
 public interface TodoService {
 
     Long register(TodoRequest todoRequest);
