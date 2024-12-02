@@ -22,6 +22,5 @@ public class TodoRequest {
     @NotNull(message = "Complete status is required")
     private Boolean complete;
 
-    @NotNull(message = "Due date is required")
     private LocalDate dueDate;
 }
