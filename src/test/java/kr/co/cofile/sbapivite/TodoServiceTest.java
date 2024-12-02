@@ -1,6 +1,7 @@
 package kr.co.cofile.sbapivite;
 
 import kr.co.cofile.sbapivite.dto.PageRequest;
+import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
 import kr.co.cofile.sbapivite.service.TodoService;
@@ -72,10 +73,10 @@ public class TodoServiceTest {
     @Test
     public void testListTodo() {
         PageRequest pageRequest = PageRequest.builder()
-                .page(1)
+                .page(3)
                 .build();
-        List<TodoResponse> todos = todoService.listTodo(pageRequest);
+        PageResponse<TodoResponse> pageResponse = todoService.listTodo(pageRequest);
 
-        log.info(todos);
+        log.info(pageResponse.toString());
     }
 }
