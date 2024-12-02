@@ -1,10 +1,12 @@
 package kr.co.cofile.sbapivite.dto;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@ToString
 public class PageResponse<T> {
     private final List<T> content;  // 페이징된 콘텐츠 목록
     private final int totalElements; // 전체 데이터 개수

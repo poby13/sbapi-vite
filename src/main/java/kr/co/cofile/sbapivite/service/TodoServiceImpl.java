@@ -1,6 +1,7 @@
 package kr.co.cofile.sbapivite.service;
 
 import kr.co.cofile.sbapivite.dto.PageRequest;
+import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
 import kr.co.cofile.sbapivite.entity.Todo;
@@ -60,12 +61,17 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<TodoResponse> listTodo(PageRequest pageRequest) {
+    public PageResponse<TodoResponse> listTodo(PageRequest pageRequest) {
 
         List<Todo> todos = todoMapper.selectAllTodo(pageRequest.getOffset(), pageRequest.getSize());
-
-        return todos.stream()
+        List<TodoResponse> todoResponses =  todos.stream()
                 .map(todo -> modelMapper.map(todo, TodoResponse.class))
                 .toList();
+
+        int totalElements = todoMapper.countTotalTodo();
+        int currentPage = pageRequest.getPage();
+        int size = pageRequest.getSize();
+
+        return new PageResponse<>(todoResponses, totalElements, currentPage, size);
     }
 }
