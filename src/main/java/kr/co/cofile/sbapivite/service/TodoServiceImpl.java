@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite.service;
 
+import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
 import kr.co.cofile.sbapivite.entity.Todo;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +57,15 @@ public class TodoServiceImpl implements TodoService {
     public void removeTodo(Long tno) {
 
         todoMapper.deleteTodoById(tno);
+    }
+
+    @Override
+    public List<TodoResponse> listTodo(PageRequest pageRequest) {
+
+        List<Todo> todos = todoMapper.selectAllTodo(pageRequest.getOffset(), pageRequest.getSize());
+
+        return todos.stream()
+                .map(todo -> modelMapper.map(todo, TodoResponse.class))
+                .toList();
     }
 }
