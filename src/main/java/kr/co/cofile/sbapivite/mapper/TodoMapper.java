@@ -1,6 +1,6 @@
 package kr.co.cofile.sbapivite.mapper;
 
-import kr.co.cofile.sbapivite.SortOrder;
+import kr.co.cofile.sbapivite.domain.SortOrder;
 import kr.co.cofile.sbapivite.entity.Todo;
 import org.apache.ibatis.annotations.*;
 

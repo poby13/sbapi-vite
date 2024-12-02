@@ -22,7 +22,7 @@ public class TodoServiceTest {
     private TodoService todoService;
 
     @Test
-    public void testRegister() {
+    public void testAddTodo() {
         for (int i = 1; i <= 100; i++) {
 
             TodoRequest todoRequest = TodoRequest.builder()
@@ -31,7 +31,7 @@ public class TodoServiceTest {
                     .dueDate(LocalDate.of(2024, 12, 24))
                     .build();
 
-            Long tno = todoService.register(todoRequest);
+            Long tno = todoService.addTodo(todoRequest);
 
             log.info("TNO: " + tno);
         }

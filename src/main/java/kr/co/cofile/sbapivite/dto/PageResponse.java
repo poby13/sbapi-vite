@@ -1,6 +1,6 @@
 package kr.co.cofile.sbapivite.dto;
 
-import kr.co.cofile.sbapivite.SortOrder;
+import kr.co.cofile.sbapivite.domain.SortOrder;
 import lombok.Getter;
 import lombok.ToString;
 

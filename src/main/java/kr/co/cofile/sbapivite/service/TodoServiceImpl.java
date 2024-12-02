@@ -1,6 +1,6 @@
 package kr.co.cofile.sbapivite.service;
 
-import kr.co.cofile.sbapivite.SortOrder;
+import kr.co.cofile.sbapivite.domain.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
@@ -26,7 +26,7 @@ public class TodoServiceImpl implements TodoService {
     private final TodoMapper todoMapper;
 
     @Override
-    public Long register(TodoRequest todoRequest) {
+    public Long addTodo(TodoRequest todoRequest) {
         log.info("register");
 
         // DTO를 엔티티로 변환
