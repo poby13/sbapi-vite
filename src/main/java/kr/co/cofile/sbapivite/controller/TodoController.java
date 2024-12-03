@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite.controller;
 
+import kr.co.cofile.sbapivite.domain.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
@@ -27,7 +28,16 @@ public class TodoController {
     }
 
     @GetMapping("/list")
-    public PageResponse<TodoResponse> listTodo(@RequestBody PageRequest pageRequest) {
+    public PageResponse<TodoResponse> listTodo(@RequestParam(name = "page", required = false) Integer page,
+                                               @RequestParam(name = "size", required = false) Integer size,
+                                               @RequestParam(name = "sort_order", required = false) SortOrder sortOrder) {
+
+        PageRequest pageRequest = PageRequest.builder()
+                .page(page != null ? page : 1)
+                .size(size != null ? size : 10)
+                .sortOrder(sortOrder != null ? sortOrder : SortOrder.DESC)
+                .build();
+
         return todoService.listTodo(pageRequest);
     }
 

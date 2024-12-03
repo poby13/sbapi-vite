@@ -63,8 +63,8 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public PageResponse<TodoResponse> listTodo(PageRequest pageRequest) {
-
-        List<Todo> todos = todoMapper.selectAllTodo(SortOrder.DESC, pageRequest.getOffset(), pageRequest.getSize());
+        // Enum을 String으로 처리
+        List<Todo> todos = todoMapper.selectAllTodo(pageRequest.getSortOrder().name(), pageRequest.getOffset(), pageRequest.getSize());
         List<TodoResponse> todoResponses =  todos.stream()
                 .map(todo -> modelMapper.map(todo, TodoResponse.class))
                 .toList();

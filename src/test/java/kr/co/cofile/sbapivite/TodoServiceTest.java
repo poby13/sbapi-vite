@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite;
 
+import kr.co.cofile.sbapivite.domain.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
@@ -71,6 +72,8 @@ public class TodoServiceTest {
     public void testListTodo() {
         PageRequest pageRequest = PageRequest.builder()
                 .page(3)
+                .size(10)
+                .sortOrder(SortOrder.DESC)
                 .build();
         PageResponse<TodoResponse> pageResponse = todoService.listTodo(pageRequest);
 

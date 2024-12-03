@@ -1,6 +1,7 @@
 package kr.co.cofile.sbapivite.mapper;
 
 import kr.co.cofile.sbapivite.domain.SortOrder;
+import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.entity.Todo;
 import org.apache.ibatis.annotations.*;
 
@@ -23,8 +24,9 @@ public interface TodoMapper {
     @Delete("delete from tbl_todo where tno = #{tno}")
     void deleteTodoById(Long tno);
 
-    @Select("select * from tbl_todo order by #{sortOrder} limit #{offset}, #{size}")
-    List<Todo> selectAllTodo(SortOrder sortOrder, int offset, int size);
+    List<Todo> selectAllTodo(@Param("sortOrder") String sortOrder,
+                             @Param("offset") int offset,
+                             @Param("limit") int limit);
 
     @Select("SELECT count(*) FROM tbl_todo")
     int countTotalTodo();
