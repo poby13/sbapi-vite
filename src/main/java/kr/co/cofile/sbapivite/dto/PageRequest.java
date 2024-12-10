@@ -1,11 +1,9 @@
 package kr.co.cofile.sbapivite.dto;
 
-import kr.co.cofile.sbapivite.domain.SortOrder;
+import kr.co.cofile.sbapivite.enums.SortOrder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Optional;
 
 
 @Getter

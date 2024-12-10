@@ -1,6 +1,6 @@
 package kr.co.cofile.sbapivite.service;
 
-import kr.co.cofile.sbapivite.domain.SortOrder;
+import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
