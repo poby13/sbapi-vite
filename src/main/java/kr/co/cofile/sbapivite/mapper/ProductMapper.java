@@ -41,4 +41,11 @@ public interface ProductMapper {
 
     Optional<Product> selectProductWithImagesById(Long pno);
 
+    List<Product> selectAllProduct(@Param("sortOrder") String sortOrder,
+                             @Param("offset") int offset,
+                             @Param("limit") int limit);
+
+    @Select("SELECT count(*) FROM tbl_product")
+    int countTotalProduct();
+
 }
