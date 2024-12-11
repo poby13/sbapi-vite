@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ProductImage {
 
-    private Long imageIo;
+    private Long imageId;
     private Long productPno;
     private String fileName;
     private String filePath;

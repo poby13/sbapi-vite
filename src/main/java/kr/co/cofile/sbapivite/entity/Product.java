@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@ToString(exclude = "imageList")
+@Setter
+@ToString(exclude = "images")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,27 +19,16 @@ public class Product {
     private String pdesc;
     private boolean delFlag;
 
+    @Builder.Default
     private List<ProductImage> images = new ArrayList<>();
 
-    public void changePrice(int price) {
-        this.price = price;
-    }
-
-    public void changeDesc(String pdesc) {
-        this.pdesc = pdesc;
+    public void changeDel(boolean delFlag) {
+        this.delFlag = delFlag;
     }
 
     public void addImage(ProductImage image) {
-        image.setOrd(this.images.size());
+        image.setSequence(this.images.size()); // 현재 파일의 갯수를 추가 순서로 사용
         images.add(image);
-    }
-
-    public void addImageString(String fileName) {
-        ProductImage productImage = ProductImage.builder()
-                .fileName(fileName)
-                .build();
-
-        addImage(productImage);
     }
 
     public void clearList() {
