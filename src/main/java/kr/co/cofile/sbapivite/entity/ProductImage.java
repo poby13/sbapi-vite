@@ -11,12 +11,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ProductImage {
 
+    @Setter
     private Long imageId;
+
     private Long productPno;
     private String fileName;
     private String filePath;
     private String fileType;
     private LocalDateTime uploadDate;
+
     @Setter
     private int sequence;
 

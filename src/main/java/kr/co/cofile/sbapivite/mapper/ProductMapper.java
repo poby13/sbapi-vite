@@ -31,6 +31,7 @@ public interface ProductMapper {
 
     @Insert("INSERT INTO product_image_list (product_pno, file_name, file_path, file_type, sequence) " +
             "VALUES (#{productPno}, #{fileName}, #{filePath}, #{fileType}, #{sequence})")
+    @Options(useGeneratedKeys = true, keyProperty = "imageId")
     void insertProductImage(ProductImage productImage);
 
     @Select("SELECT * FROM product_image_list WHERE product_pno = #{productPno}")

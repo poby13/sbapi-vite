@@ -1,9 +1,6 @@
 package kr.co.cofile.sbapivite.controller;
 
-import kr.co.cofile.sbapivite.dto.PageRequest;
-import kr.co.cofile.sbapivite.dto.PageResponse;
-import kr.co.cofile.sbapivite.dto.ProductResponse;
-import kr.co.cofile.sbapivite.dto.TodoResponse;
+import kr.co.cofile.sbapivite.dto.*;
 import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.service.ProductService;
 import kr.co.cofile.sbapivite.util.CustomFileUtil;
@@ -26,20 +23,23 @@ public class ProductController {
     private final CustomFileUtil fileUtil;
     private final ProductService productService;
 
-    @PostMapping("/")
-    public Map<String, String> register(ProductResponse productResponse) {
+    @PostMapping
+    public Map<String, Long> addProduct(@ModelAttribute ProductRequest productRequest,
+                                        @RequestParam(value = "files", required = false) List<MultipartFile> files) {
 
-        log.info("register: " + productResponse);
+        log.info("addProduct: " + productRequest);
 
-//        List<MultipartFile> files = productResponse.getFiles();
+//        List<MultipartFile> files = productRequest.getFiles();
 
-//        List<String> uploadFileNames = fileUtil.saveFiles(files);
+        List<String> uploadFileNames = fileUtil.saveFiles(files);
 
-//        productResponse.setUploadFileNames(uploadFileNames);
+        //productRequest.setUploadFileNames(uploadFileNames);
 
-//        log.info(uploadFileNames);
+        //log.info(uploadFileNames);
 
-        return Map.of("RESULT", "SUCCESS");
+        Long pno = productService.addProduct(productRequest);
+
+        return Map.of("result", pno);
     }
 
     @GetMapping("/view/{fileName}")

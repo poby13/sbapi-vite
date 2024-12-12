@@ -61,18 +61,18 @@ public class ProductMapperTests {
     @Test
     @DisplayName("Product Id로 조회 테스트")
     public void testSelectProductById() {
-        long pno = 1L;
+        long pno = 2L;
 
         Product product = productMapper.selectProductById(pno).orElseThrow(() -> new IllegalArgumentException("Product를 찾을 수 없습니다: " + pno));
 
-        assertEquals(1L, product.getPno(), "Product Id가 일치하지 않음.");
+        assertEquals(2L, product.getPno(), "Product Id가 일치하지 않음.");
         log.info("조회 Product: {}",product);
     }
 
     @Test
     @DisplayName("Product 수정 테스트")
     public void testUpdateProduct() {
-        long pno = 1L;
+        long pno = 2L;
         Product product = productMapper.selectProductById(pno).orElseThrow();
 
         String savedPname = product.getPname();
