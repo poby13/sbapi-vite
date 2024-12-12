@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,22 +23,23 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public Map<String, Long> addProduct(@ModelAttribute ProductRequest productRequest,
+    public ProductAddResponse addProduct(@ModelAttribute ProductRequest productRequest,
                                         @RequestParam(value = "files", required = false) List<MultipartFile> files) {
 
-        log.info("addProduct: " + productRequest);
+        log.info("addProduct: {}", productRequest);
 
-//        List<MultipartFile> files = productRequest.getFiles();
-
+        // 첨부파일 저장
         List<String> uploadFileNames = fileUtil.saveFiles(files);
 
-        //productRequest.setUploadFileNames(uploadFileNames);
+        log.info(uploadFileNames);
 
-        //log.info(uploadFileNames);
-
+        // 상품정보 등록
         Long pno = productService.addProduct(productRequest);
 
-        return Map.of("result", pno);
+        return ProductAddResponse.builder()
+                .pno(pno)
+                .uploadFileNames(uploadFileNames)
+                .build();
     }
 
     @GetMapping("/view/{fileName}")

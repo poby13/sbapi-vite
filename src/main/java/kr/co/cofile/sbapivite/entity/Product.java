@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString(exclude = "images")
+@ToString(exclude = "productImages")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,18 +20,18 @@ public class Product {
     private boolean delFlag;
 
     @Builder.Default
-    private List<ProductImage> images = new ArrayList<>();
+    private List<ProductImage> productImages = new ArrayList<>();
 
     public void changeDel(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
     public void addImage(ProductImage image) {
-        image.setSequence(this.images.size()); // 현재 파일의 갯수를 추가 순서로 사용
-        images.add(image);
+        image.setSequence(this.productImages.size()); // 현재 파일의 갯수를 추가 순서로 사용
+        productImages.add(image);
     }
 
     public void clearList() {
-        this.images.clear();
+        this.productImages.clear();
     }
 }
