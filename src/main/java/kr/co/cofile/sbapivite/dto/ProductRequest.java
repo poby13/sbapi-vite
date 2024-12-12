@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductRequest {
 
+    private Long pno;
     private String pname;
     private int price;
     private String pdesc;

@@ -13,6 +13,7 @@ CREATE TABLE product_image_list (
     file_name VARCHAR(255) NOT NULL,         -- 파일명
     file_path VARCHAR(500),                  -- 파일 경로나 URL
     file_type VARCHAR(50),                   -- 파일 유형 (예: jpg, png 등)
+    thumbnail_path VARCHAR(500),             -- 썸네일 파일 경로나 URL
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 업로드 날짜
     sequence INTEGER NOT NULL,               -- 이미지 순서
     PRIMARY KEY (image_id),

@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface ProductService {
 
-    Long addProduct(ProductRequest productRequest);
+    ProductAddResponse addProduct(ProductRequest productRequest);
     ProductResponse findProductById(Long pno);
+    ProductAddResponse modifyProduct(ProductRequest productRequest);
+    //void removeProduct(Long pno);
     PageResponse<ProductResponse> listProduct(PageRequest pageRequest);
 
 }

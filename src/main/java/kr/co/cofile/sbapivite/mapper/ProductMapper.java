@@ -29,8 +29,8 @@ public interface ProductMapper {
     @Update("UPDATE tbl_product SET del_flag = #{delFlag} WHERE pno = #{pno}")
     void updateToDeleteProduct(long pno, boolean delFlag);
 
-    @Insert("INSERT INTO product_image_list (product_pno, file_name, file_path, file_type, sequence) " +
-            "VALUES (#{productPno}, #{fileName}, #{filePath}, #{fileType}, #{sequence})")
+    @Insert("INSERT INTO product_image_list (product_pno, file_name, file_path, file_type, thumbnail_path, sequence) " +
+            "VALUES (#{productPno}, #{fileName}, #{filePath}, #{fileType}, #{thumbnailPath}, #{sequence})")
     @Options(useGeneratedKeys = true, keyProperty = "imageId")
     void insertProductImage(ProductImage productImage);
 
