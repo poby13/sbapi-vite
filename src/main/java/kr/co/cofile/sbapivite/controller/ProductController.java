@@ -42,6 +42,11 @@ public class ProductController {
                 .build();
     }
 
+    @GetMapping("/{pno}")
+    public ProductResponse findProductById(@PathVariable("pno") Long pno) {
+        return productService.findProductById(pno);
+    }
+
     @GetMapping("/view/{fileName}")
     public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
         return fileUtil.getFile(fileName);

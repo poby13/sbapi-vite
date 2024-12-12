@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -54,6 +55,14 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return savedPno;
+    }
+
+    @Override
+    public ProductResponse findProductById(Long pno) {
+        Optional<Product> result = productMapper.selectProductById(pno);
+        Product product = result.orElseThrow();
+
+        return modelMapper.map(product, ProductResponse.class);
     }
 
     @Override

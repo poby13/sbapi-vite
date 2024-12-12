@@ -154,7 +154,7 @@ public class ProductMapperTests {
         Product product = productMapper.selectProductWithImagesById(productId).orElseThrow(() ->
                 new IllegalArgumentException("Product를 찾을 수 없음: " + productId));
 
-        assertNotNull(product.getImages(), "Product 이미지는 null일 수 없습니다.");
+        assertNotNull(product.getProductImages(), "Product 이미지는 null일 수 없습니다.");
         log.info("이미지를 포함한 Product: {}", product);
     }
 }
