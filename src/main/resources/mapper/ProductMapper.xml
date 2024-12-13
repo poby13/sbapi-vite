@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.cofile.sbapivite.mapper.ProductMapper">
+    <resultMap id="ProductWithImages" type="kr.co.cofile.sbapivite.entity.Product">
+        <id property="pno" column="p_pno"/>
+        <result property="delFlag" column="p_del_flag"/>
+        <result property="pdesc" column="p_pdesc"/>
+        <result property="pname" column="p_pname"/>
+        <result property="price" column="p_price"/>
+        <collection property="images" ofType="kr.co.cofile.sbapivite.entity.ProductImage">
+            <result property="productPno" column="i_product_pno"/>
+            <result property="fileName" column="i_file_name"/>
+            <result property="ord" column="i_ord"/>
+        </collection>
+    </resultMap>
+</mapper>
