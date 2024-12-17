@@ -65,8 +65,11 @@ public class ProductServiceImpl implements ProductService {
         // 기존 상품 정보 업데이트
         updateProduct(product, productRequest);
 
+        // 첨부파일 삭제
+        List<ProductImage> productImages = productMapper.selectImagesByProductId(pno);
+        List<String> files = productImages.stream().map(ProductImage::getFilePath).toList();
+        customFileUtil.deleteFiles(files);
         // 기존 이미지 삭제
-        // TODO 저장되어 있던 이미지 삭제
         productMapper.deleteImagesByProductId(pno);
 
 
