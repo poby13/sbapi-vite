@@ -64,10 +64,13 @@ public class ProductServiceImpl implements ProductService {
         // 기존 상품 정보 업데이트
         updateProduct(product, productRequest);
 
-        // 첨부파일 삭제
+        // 첨부파일 삭제 - image와 thumb을 각각 리스트에 담는다.
         List<ProductImage> productImages = productMapper.selectImagesByProductId(pno);
-        List<String> files = productImages.stream().map(ProductImage::getFilePath).toList();
-        customFileUtil.deleteFiles(files);
+        List<String> filePaths = productImages.stream()
+                .flatMap(p -> Arrays.stream(new String[]{p.getFilePath(), p.getThumbnailPath()}))
+                .filter(Objects::nonNull) // null 제외
+                .toList();
+        customFileUtil.deleteFiles(filePaths);
         // 기존 이미지 삭제
         productMapper.deleteImagesByProductId(pno);
 

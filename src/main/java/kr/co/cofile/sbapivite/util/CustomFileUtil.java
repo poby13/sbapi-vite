@@ -162,20 +162,17 @@ public class CustomFileUtil {
         return ResponseEntity.ok().headers(headers).body((Resource) resource);
     }
 
-    public void deleteFiles(List<String> fileNames) {
+    public void deleteFiles(List<String> filePaths) {
 
-        if(fileNames == null || fileNames.isEmpty()) {
+        if(filePaths == null || filePaths.isEmpty()) {
            return;
         }
 
-        fileNames.forEach(fileName -> {
-            String thumbnailFileName = "s_" + fileNames;
-            Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
-            Path filePath = Paths.get(uploadPath, fileName);
+        filePaths.forEach(fileName -> {
+            Path filePath = Paths.get(fileName);
 
             try {
                 Files.deleteIfExists(filePath);
-                Files.deleteIfExists(thumbnailPath);
             } catch(IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
