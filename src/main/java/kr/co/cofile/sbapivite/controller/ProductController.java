@@ -5,10 +5,7 @@ import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +42,12 @@ public class ProductController {
     @PutMapping("/{pno}")
     public ProductAddResponse modifyProduct(@PathVariable("pno") Long pno,
                                                              @ModelAttribute ProductRequest productRequest) {
+        productRequest.setPno(pno);
         return productService.modifyProduct(productRequest);
+    }
+
+    @DeleteMapping("/{pno}")
+    public void removeProduct(@PathVariable("pno") Long pno) {
+        productService.removeProduct(pno);
     }
 }
