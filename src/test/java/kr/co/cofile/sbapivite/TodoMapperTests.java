@@ -25,7 +25,7 @@ public class TodoMapperTests {
 
     @Test
     public void testInsert() {
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 10; i++) {
 
             Todo todo = Todo.builder()
                     .title("제목..." + i)

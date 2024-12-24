@@ -4,38 +4,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.cofile.sbapivite.mapper.ProductMapper">
     <resultMap id="ProductWithImages" type="kr.co.cofile.sbapivite.entity.Product">
-        <id property="pno" column="pno" />
+        <id property="id" column="id" />
         <result property="delFlag" column="del_flag" />
         <result property="pdesc" column="pdesc" />
         <result property="pname" column="pname" />
         <result property="price" column="price" />
         <collection property="productImages" ofType="kr.co.cofile.sbapivite.entity.ProductImage">
             <id property="imageId" column="image_id" />
-            <result property="productPno" column="product_pno" />
+            <result property="productPno" column="product_id" />
             <result property="fileName" column="file_name" />
             <result property="filePath" column="file_path" />
             <result property="fileType" column="file_type" />
-            <result property="uploadDate" column="upload_date" />
+            <result property="uploadedAt" column="uploaded_at" />
             <result property="sequence" column="sequence" />
         </collection>
     </resultMap>
 
     <select id="selectProductWithImagesById" parameterType="long" resultMap="ProductWithImages">
         SELECT
-            p.pno, p.del_flag, p.pdesc, p.pname, p.price,
-            i.image_id, i.product_pno, i.file_name, i.file_path, i.file_type, i.upload_date, i.sequence
-        FROM tbl_product p
-                 LEFT JOIN product_image_list i ON p.pno = i.product_pno
-        WHERE p.pno = #{pno}
+            p.id, p.del_flag, p.pdesc, p.pname, p.price,
+            i.id AS image_id, i.product_id, i.file_name, i.file_path, i.file_type, i.uploaded_at, i.sequence
+        FROM products p
+                 LEFT JOIN product_images i ON p.id = i.product_id
+        WHERE p.id = #{id}
     </select>
 
     <select id="selectAllProduct" resultMap="ProductWithImages">
         SELECT
-        p.pno, p.del_flag, p.pdesc, p.pname, p.price,
-        i.image_id, i.product_pno, i.file_name, i.file_path, i.file_type, i.upload_date, i.sequence
-        FROM tbl_product p
-        LEFT JOIN product_image_list i ON p.pno = i.product_pno
-        ORDER BY p.pno
+        p.id, p.del_flag, p.pdesc, p.pname, p.price,
+        i.image_id, i.product_id, i.file_name, i.file_path, i.file_type, i.uploaded_at, i.sequence
+        FROM products p
+        LEFT JOIN product_images i ON p.id = i.product_id
+        ORDER BY p.id
         <if test="sortOrder == 'ASC'">ASC</if>
         <if test="sortOrder == 'DESC'">DESC</if>
         LIMIT #{offset}, #{limit}

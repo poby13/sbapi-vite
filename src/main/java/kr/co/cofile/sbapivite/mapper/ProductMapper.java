@@ -10,43 +10,43 @@ import java.util.Optional;
 @Mapper
 public interface ProductMapper {
 
-    @Insert("INSERT INTO tbl_product (del_flag, pdesc, pname, price) " +
+    @Insert("INSERT INTO products (del_flag, pdesc, pname, price) " +
             "VALUES (#{delFlag}, #{pdesc}, #{pname}, #{price})")
-    @Options(useGeneratedKeys = true, keyProperty = "pno")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertProduct(Product product);
 
-    @Select("SELECT * FROM tbl_product WHERE pno = #{pno}")
-    Optional<Product> selectProductById(Long pno);
+    @Select("SELECT * FROM products WHERE id = #{id}")
+    Optional<Product> selectProductById(Long id);
 
-    @Update("UPDATE tbl_product " +
+    @Update("UPDATE products " +
             "SET del_flag = #{delFlag}, pdesc = #{pdesc}, pname = #{pname}, price = #{price} " +
-            "WHERE pno = #{pno}")
+            "WHERE id = #{id}")
     void updateProduct(Product product);
 
-    @Delete("DELETE FROM tbl_product WHERE pno = #{pno}")
-    void deleteProductById(Long pno);
+    @Delete("DELETE FROM products WHERE id = #{id}")
+    void deleteProductById(Long id);
 
-    @Update("UPDATE tbl_product SET del_flag = #{delFlag} WHERE pno = #{pno}")
-    void updateToDeleteProduct(long pno, boolean delFlag);
+    @Update("UPDATE products SET del_flag = #{delFlag} WHERE id = #{id}")
+    void updateToDeleteProduct(long id, boolean delFlag);
 
-    @Insert("INSERT INTO product_image_list (product_pno, file_name, file_path, file_type, thumbnail_path, sequence) " +
-            "VALUES (#{productPno}, #{fileName}, #{filePath}, #{fileType}, #{thumbnailPath}, #{sequence})")
+    @Insert("INSERT INTO product_images (product_id, file_name, file_path, file_type, thumbnail_path, sequence) " +
+            "VALUES (#{productId}, #{fileName}, #{filePath}, #{fileType}, #{thumbnailPath}, #{sequence})")
     @Options(useGeneratedKeys = true, keyProperty = "imageId")
     void insertProductImage(ProductImage productImage);
 
-    @Select("SELECT * FROM product_image_list WHERE product_pno = #{productPno}")
-    List<ProductImage> selectImagesByProductId(Long pno);
+    @Select("SELECT * FROM product_images WHERE product_id = #{productId}")
+    List<ProductImage> selectImagesByProductId(Long id);
 
-    @Delete("DELETE FROM product_image_list WHERE product_pno = #{productPno}")
-    void deleteImagesByProductId(Long pno);
+    @Delete("DELETE FROM product_images WHERE product_id = #{productId}")
+    void deleteImagesByProductId(Long id);
 
-    Optional<Product> selectProductWithImagesById(Long pno);
+    Optional<Product> selectProductWithImagesById(Long id);
 
     List<Product> selectAllProduct(@Param("sortOrder") String sortOrder,
                              @Param("offset") int offset,
                              @Param("limit") int limit);
 
-    @Select("SELECT count(*) FROM tbl_product")
+    @Select("SELECT count(*) FROM products")
     int countTotalProduct();
 
 }
