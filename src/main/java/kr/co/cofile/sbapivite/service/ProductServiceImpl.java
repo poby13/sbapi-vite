@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -65,8 +64,11 @@ public class ProductServiceImpl implements ProductService {
         // 기존 상품 정보 업데이트
         updateProduct(product, productRequest);
 
+        // 첨부파일 삭제
+        List<ProductImage> productImages = productMapper.selectImagesByProductId(pno);
+        List<String> files = productImages.stream().map(ProductImage::getFilePath).toList();
+        customFileUtil.deleteFiles(files);
         // 기존 이미지 삭제
-        // TODO 저장되어 있던 이미지 삭제
         productMapper.deleteImagesByProductId(pno);
 
 
@@ -76,6 +78,21 @@ public class ProductServiceImpl implements ProductService {
 
         // 응답 생성
         return createProductAddResponse(pno, uploadedImages);
+    }
+
+    @Override
+    public void removeProduct(Long pno) {
+
+        // 첨부파일 삭제
+        List<ProductImage> productImages = productMapper.selectImagesByProductId(pno);
+        List<String> files = productImages.stream().map(ProductImage::getFilePath).toList();
+        customFileUtil.deleteFiles(files);
+        // 기존 이미지 삭제
+        productMapper.deleteImagesByProductId(pno);
+
+        // 상품 삭제
+        productMapper.deleteProductById(pno);
+
     }
 
     // 상품 정보 업데이트
@@ -117,8 +134,6 @@ public class ProductServiceImpl implements ProductService {
                 .uploadFileNames(savedFileNames)
                 .build();
     }
-
-    // TODO removeProduct
 
     @Override
     public PageResponse<ProductResponse> listProduct(PageRequest pageRequest) {
