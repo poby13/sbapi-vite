@@ -1,46 +1,32 @@
-create table member_roles
+CREATE TABLE member_roles
 (
-    member_id bigint not null,
-    role_id   bigint not null,
-    primary key (member_id, role_id),
-    constraint member_roles_ibfk_1
-        foreign key (member_id) references tbl_members (id)
-            on delete cascade,
-    constraint member_roles_ibfk_2
-        foreign key (role_id) references tbl_roles (id)
-            on delete cascade
+    member_id BIGINT NOT NULL,
+    role_id   BIGINT NOT NULL,
+    PRIMARY KEY (member_id, role_id),
+    CONSTRAINT FK_MEMBER_ROLES_MEMBERS FOREIGN KEY (member_id) REFERENCES members (id) ON DELETE CASCADE,
+    CONSTRAINT FK_MEMBER_ROLES_ROLES FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE
 );
 
-create index role_id
-    on member_roles (role_id);
+-- 복합키의 기본 인덱스는 WHERE member_id = ? AND role_id = ?나 복합키의 첫번째 컬럼이 조건으롤 사용될 때(WHERE member_id = ?) 효과적
+-- role_id만 단독으로 검색 조건이나 조인이 자수 수행되면 필요
+CREATE INDEX IDX_ROLE_ID ON member_roles (role_id);
 
-create table tbl_members
+CREATE TABLE members
 (
-    id         bigint auto_increment
-        primary key,
-    email      varchar(255)                           not null,
-    pw         varchar(255)                           not null,
-    nickname   varchar(100)                           null,
-    social     tinyint(1) default 0                   null,
-    enabled    tinyint(1) default 1                   null,
-    created_at timestamp  default current_timestamp() null,
-    updated_at timestamp  default current_timestamp() null on update current_timestamp(),
-    constraint email
-        unique (email)
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email      VARCHAR(255)                        NOT NULL,
+    pw         VARCHAR(255)                        NOT NULL,
+    nickname   VARCHAR(100)                        NULL,
+    social     BOOLEAN   DEFAULT FALSE             NULL,
+    enabled    BOOLEAN   DEFAULT TRUE              NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT UQ_EMAIL UNIQUE (email)
 );
 
-create index idx_email
-    on tbl_members (email);
-
-create table tbl_roles
+CREATE TABLE roles
 (
-    id        bigint auto_increment
-        primary key,
-    role_name varchar(50) not null,
-    constraint role_name
-        unique (role_name)
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(50) NOT NULL,
+    CONSTRAINT UQ_ROLE_NAME UNIQUE (role_name)
 );
-
-create index idx_role_name
-    on tbl_roles (role_name);
-

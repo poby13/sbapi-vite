@@ -1,11 +1,13 @@
-use malldb;
+# use malldb;
+CREATE DATABASE mall_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-create table tbl_todo
+USE mall_db;
+
+CREATE TABLE todos
 (
-    tno      bigint not null auto_increment,
-    title    varchar(255),
-    writer   varchar(255),
-    complete bit    not null default false,
-    due_date date,
-    primary key (tno)
+    id       BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title    VARCHAR(255)          NOT NULL,
+    writer   VARCHAR(255)          NOT NULL,
+    complete BOOLEAN DEFAULT FALSE NOT NULL,
+    due_date DATE
 );
