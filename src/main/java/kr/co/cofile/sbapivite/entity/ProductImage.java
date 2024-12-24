@@ -2,7 +2,6 @@ package kr.co.cofile.sbapivite.entity;
 
 import lombok.*;
 
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,10 +12,10 @@ import java.time.LocalDateTime;
 public class ProductImage {
 
     @Setter
-    private Long imageId;
+    private Long id;
 
     @Setter
-    private Long productPno;
+    private Long productId;
 
     private String fileName;
     private String filePath; // Path

@@ -39,7 +39,7 @@ public class CustomFileUtil {
     public void init() {
         File tempFolder = new File(uploadPath);
 
-        if(!tempFolder.exists()) {
+        if (!tempFolder.exists()) {
             tempFolder.mkdir();
         }
 
@@ -51,7 +51,7 @@ public class CustomFileUtil {
 
     public List<ProductImage> saveFiles(List<MultipartFile> files) throws RuntimeException {
 
-        if(files == null || files.isEmpty()) {
+        if (files == null || files.isEmpty()) {
             return List.of();
         }
 
@@ -73,7 +73,7 @@ public class CustomFileUtil {
                 // 파일타입
                 String contentType = detectContentType(file);
 
-                if(contentType != null && contentType.startsWith("image")) {
+                if (contentType != null && contentType.startsWith("image")) {
                     // 썸네일 파일 저장
                     Path thumbnailPath = generateThumbnail(file, savedName, contentType);
 
@@ -99,7 +99,7 @@ public class CustomFileUtil {
         Files.copy(file.getInputStream(), savePath);
     }
 
-    private String detectContentType(MultipartFile file)throws IOException {
+    private String detectContentType(MultipartFile file) throws IOException {
         Tika tika = new Tika();
         return tika.detect(file.getBytes());
     }
@@ -155,17 +155,17 @@ public class CustomFileUtil {
 
         try {
             headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
-        } catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
 
-        return ResponseEntity.ok().headers(headers).body((Resource) resource);
+        return ResponseEntity.ok().headers(headers).body(resource);
     }
 
     public void deleteFiles(List<String> filePaths) {
 
-        if(filePaths == null || filePaths.isEmpty()) {
-           return;
+        if (filePaths == null || filePaths.isEmpty()) {
+            return;
         }
 
         filePaths.forEach(fileName -> {
@@ -173,7 +173,7 @@ public class CustomFileUtil {
 
             try {
                 Files.deleteIfExists(filePath);
-            } catch(IOException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
         });

@@ -1,10 +1,10 @@
 package kr.co.cofile.sbapivite.controller;
 
-import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
+import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,9 +22,9 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    @GetMapping("/{tno}")
-    public TodoResponse findTodoById(@PathVariable("tno") Long tno) {
-        return todoService.findTodoById(tno);
+    @GetMapping("/{id}")
+    public TodoResponse findTodoById(@PathVariable("id") Long id) {
+        return todoService.findTodoById(id);
     }
 
     @GetMapping("/list")
@@ -46,18 +46,18 @@ public class TodoController {
 
         log.info("TodoRequest: {}", todoRequest);
 
-        Long tno = todoService.addTodo(todoRequest);
+        Long id = todoService.addTodo(todoRequest);
 
-        return ResponseEntity.ok("TNO: {}" + tno);
+        return ResponseEntity.ok("TNO: {}" + id);
     }
 
-    @PutMapping("/{tno}")
-    public ResponseEntity<Map<String, String>> modifyTodo(@PathVariable("tno") Long tno,
-                                             @RequestBody TodoRequest todoRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, String>> modifyTodo(@PathVariable("id") Long id,
+                                                          @RequestBody TodoRequest todoRequest) {
 
         log.info(todoRequest.toString());
 
-        todoService.modifyTodo(tno, todoRequest);
+        todoService.modifyTodo(id, todoRequest);
 
         Map<String, String> result = new HashMap<>();
         result.put("RESULT", "SUCCESS");
@@ -65,12 +65,12 @@ public class TodoController {
         return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping("/{tno}")
-    public ResponseEntity<Map<String, String>> deleteTodo(@PathVariable("tno") Long tno) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteTodo(@PathVariable("id") Long id) {
 
-        log.info("Remove: {}", tno);
+        log.info("Remove: {}", id);
 
-        todoService.removeTodo(tno);
+        todoService.removeTodo(id);
 
         Map<String, String> result = new HashMap<>();
         result.put("RESULT", "SUCCESS");

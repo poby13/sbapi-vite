@@ -33,10 +33,10 @@ public class ProductMapperTests {
     }
 
     // ProductImage
-    private ProductImage createTestProductImage(long productPno, int sequence) {
+    private ProductImage createTestProductImage(long productId, int sequence) {
         return ProductImage.builder()
-                .productPno(productPno)
-                .fileName(UUID.randomUUID().toString() + "_이미지" + sequence + ".jpg")
+                .productId(productId)
+                .fileName(UUID.randomUUID() + "_이미지" + sequence + ".jpg")
                 .filePath("/images/")
                 .fileType("jpg")
                 .sequence(sequence)
@@ -52,7 +52,7 @@ public class ProductMapperTests {
 
             productMapper.insertProduct(product);
 
-            assertNotNull(product.getPno(), "Product Id는 삽입 후에 null일 수 없습니다.");
+            assertNotNull(product.getId(), "Product Id는 삽입 후에 null일 수 없습니다.");
             log.info("삽입 Product: {}", product);
         }
 
@@ -65,8 +65,8 @@ public class ProductMapperTests {
 
         Product product = productMapper.selectProductById(pno).orElseThrow(() -> new IllegalArgumentException("Product를 찾을 수 없습니다: " + pno));
 
-        assertEquals(2L, product.getPno(), "Product Id가 일치하지 않음.");
-        log.info("조회 Product: {}",product);
+        assertEquals(2L, product.getId(), "Product Id가 일치하지 않음.");
+        log.info("조회 Product: {}", product);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ProductMapperTests {
     @Test
     @DisplayName("Product 삭제 테스트")
     public void testDeleteProductById() {
-        long pno = 1L;
+        long pno = 2L;
 
         productMapper.deleteProductById(pno);
 
@@ -112,13 +112,21 @@ public class ProductMapperTests {
     @Test
     @DisplayName("이미지 등록 테스트")
     public void testInsertProductImage() {
-        long productPno = 5L;
-        for (int i = 0; i < 10; i++) {
-            ProductImage productImage = createTestProductImage(productPno, i);
+        long productId = 5L;
+
+        // 상품이 존재하는지 확인
+        Optional<Product> product = productMapper.selectProductById(productId);
+
+        if (product.isEmpty()) {
+            fail("상품이 존재하지 않습니다.");
+        }
+
+        for (int i = 0; i < 5; i++) {
+            ProductImage productImage = createTestProductImage(productId, i);
 
             productMapper.insertProductImage(productImage);
 
-            assertNotNull(productImage.getImageId(), "이미지 Id는 등록후 null일 수 없습니다.");
+            assertNotNull(productImage.getId(), "이미지 Id는 등록후 null일 수 없습니다.");
             log.info("등록 이미지: {}", productImage);
         }
     }
@@ -151,10 +159,13 @@ public class ProductMapperTests {
     public void testSelectProductWithImageById() {
         long productId = 5L;
 
-        Product product = productMapper.selectProductWithImagesById(productId).orElseThrow(() ->
-                new IllegalArgumentException("Product를 찾을 수 없음: " + productId));
+        Optional<Product> product = productMapper.selectProductWithImagesById(productId);
 
-        assertNotNull(product.getProductImages(), "Product 이미지는 null일 수 없습니다.");
+        if (product.isEmpty()) {
+            fail("상품이 존재하지 않습니다.");
+        }
+
+        assertNotNull(product.get().getProductImages(), "Product 이미지는 null일 수 없습니다.");
         log.info("이미지를 포함한 Product: {}", product);
     }
 }

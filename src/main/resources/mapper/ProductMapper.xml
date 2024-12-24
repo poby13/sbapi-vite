@@ -10,8 +10,8 @@
         <result property="pname" column="pname" />
         <result property="price" column="price" />
         <collection property="productImages" ofType="kr.co.cofile.sbapivite.entity.ProductImage">
-            <id property="imageId" column="image_id" />
-            <result property="productPno" column="product_id" />
+            <id property="id" column="id" />
+            <result property="productId" column="product_id" />
             <result property="fileName" column="file_name" />
             <result property="filePath" column="file_path" />
             <result property="fileType" column="file_type" />
@@ -23,7 +23,7 @@
     <select id="selectProductWithImagesById" parameterType="long" resultMap="ProductWithImages">
         SELECT
             p.id, p.del_flag, p.pdesc, p.pname, p.price,
-            i.id AS image_id, i.product_id, i.file_name, i.file_path, i.file_type, i.uploaded_at, i.sequence
+            i.id, i.product_id, i.file_name, i.file_path, i.file_type, i.uploaded_at, i.sequence
         FROM products p
                  LEFT JOIN product_images i ON p.id = i.product_id
         WHERE p.id = #{id}
@@ -32,7 +32,7 @@
     <select id="selectAllProduct" resultMap="ProductWithImages">
         SELECT
         p.id, p.del_flag, p.pdesc, p.pname, p.price,
-        i.image_id, i.product_id, i.file_name, i.file_path, i.file_type, i.uploaded_at, i.sequence
+        i.id, i.product_id, i.file_name, i.file_path, i.file_type, i.uploaded_at, i.sequence
         FROM products p
         LEFT JOIN product_images i ON p.id = i.product_id
         ORDER BY p.id

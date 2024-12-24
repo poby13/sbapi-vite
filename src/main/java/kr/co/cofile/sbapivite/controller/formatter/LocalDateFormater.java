@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class LocalDateFormater implements Formatter<LocalDate>  {
+public class LocalDateFormater implements Formatter<LocalDate> {
 
     @Override
     public LocalDate parse(String text, Locale locale) throws ParseException {

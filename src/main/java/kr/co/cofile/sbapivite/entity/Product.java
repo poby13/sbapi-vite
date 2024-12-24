@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Product {
 
-    private Long pno;
+    private Long id;
     private String pname;
     private int price;
     private String pdesc;

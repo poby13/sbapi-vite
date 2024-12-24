@@ -24,7 +24,7 @@ public class TodoServiceTest {
 
     @Test
     public void testAddTodo() {
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 50; i++) {
 
             TodoRequest todoRequest = TodoRequest.builder()
                     .title("제목..." + i)
@@ -32,40 +32,41 @@ public class TodoServiceTest {
                     .dueDate(LocalDate.of(2024, 12, 24))
                     .build();
 
-            Long tno = todoService.addTodo(todoRequest);
+            Long id = todoService.addTodo(todoRequest);
 
-            log.info("TNO: " + tno);
+            log.info("ID: " + id);
         }
     }
 
     @Test
     public void testFindById() {
-        Long tno = 46L;
+        Long id = 46L;
 
-        TodoResponse todoResponse = todoService.findTodoById(tno);
+        TodoResponse todoResponse = todoService.findTodoById(id);
 
         log.info(todoResponse);
     }
 
     @Test
     public void testUpdateTodo() {
-        Long tno = 46L;
+        Long id = 46L;
         TodoRequest todoRequest = TodoRequest.builder()
                 .title("샘플 타이틀")
                 .writer("홍길동")
+                .complete(true)
                 .build();
 
-        todoService.modifyTodo(tno, todoRequest);
+        todoService.modifyTodo(id, todoRequest);
     }
 
     @Test
     public void testDeleteTodo() {
-        Long tno = 32L;
+        Long id = 80L;
 
-        todoService.removeTodo(tno);
+        todoService.removeTodo(id);
 
         // 런타임 예외가 발생하면 참
-        assertThrows(RuntimeException.class, () -> todoService.findTodoById(tno));
+        assertThrows(RuntimeException.class, () -> todoService.findTodoById(id));
     }
 
     @Test

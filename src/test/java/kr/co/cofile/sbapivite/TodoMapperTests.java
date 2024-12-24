@@ -39,7 +39,7 @@ public class TodoMapperTests {
 
     @Test
     public void testFindById() {
-        Long tno = 25L;
+        Long tno = 5L;
 
         Optional<Todo> result = todoMapper.selectTodoById(tno);
         // Todo NoSuchElementException 예외처리
@@ -65,10 +65,10 @@ public class TodoMapperTests {
 
     @Test
     public void testDelete() {
-        Long tno = 59L;
-        todoMapper.deleteTodoById(tno);
+        Long id = 10L;
+        todoMapper.deleteTodoById(id);
 
-        Optional<Todo> result = todoMapper.selectTodoById(tno);
+        Optional<Todo> result = todoMapper.selectTodoById(id);
         assertTrue(result.isEmpty()); // Optional이 비어 있으면 테스트 통과
     }
 
@@ -84,7 +84,7 @@ public class TodoMapperTests {
 
         List<TodoResponse> todoResponses = todos.stream()
                 .map(todo -> TodoResponse.builder()
-                        .tno(todo.getTno())
+                        .id(todo.getId())
                         .title(todo.getTitle())
                         .writer(todo.getWriter())
                         .complete(todo.getComplete())

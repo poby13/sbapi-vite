@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Todo {
-    private Long tno;       // Primary Key
+    private Long id;       // Primary Key
     private String title;   // 할 일 제목
     private String writer;  // 작성자
     private Boolean complete; // 완료 여부

@@ -20,15 +20,15 @@ public class ProductController {
         return productService.addProduct(productRequest);
     }
 
-    @GetMapping("/{pno}")
-    public ProductResponse findProductById(@PathVariable("pno") Long pno) {
-        return productService.findProductById(pno);
+    @GetMapping("/{id}")
+    public ProductResponse findProductById(@PathVariable("id") Long id) {
+        return productService.findProductById(id);
     }
 
     @GetMapping("/list")
     public PageResponse<ProductResponse> listProduct(@RequestParam(name = "page", required = false) Integer page,
-                                               @RequestParam(name = "size", required = false) Integer size,
-                                               @RequestParam(name = "sort_order", required = false) SortOrder sortOrder) {
+                                                     @RequestParam(name = "size", required = false) Integer size,
+                                                     @RequestParam(name = "sort_order", required = false) SortOrder sortOrder) {
 
         PageRequest pageRequest = PageRequest.builder()
                 .page(page != null ? page : 1)
@@ -39,15 +39,15 @@ public class ProductController {
         return productService.listProduct(pageRequest);
     }
 
-    @PutMapping("/{pno}")
-    public ProductAddResponse modifyProduct(@PathVariable("pno") Long pno,
-                                                             @ModelAttribute ProductRequest productRequest) {
-        productRequest.setPno(pno);
+    @PutMapping("/{id}")
+    public ProductAddResponse modifyProduct(@PathVariable("id") Long id,
+                                            @ModelAttribute ProductRequest productRequest) {
+        productRequest.setId(id);
         return productService.modifyProduct(productRequest);
     }
 
-    @DeleteMapping("/{pno}")
-    public void removeProduct(@PathVariable("pno") Long pno) {
-        productService.removeProduct(pno);
+    @DeleteMapping("/{id}")
+    public void removeProduct(@PathVariable("id") Long id) {
+        productService.removeProduct(id);
     }
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class TodoResponse {
-    private Long tno;
+    private Long id;
     private String title;
     private String writer;
     private Boolean complete;

@@ -31,7 +31,7 @@ public interface ProductMapper {
 
     @Insert("INSERT INTO product_images (product_id, file_name, file_path, file_type, thumbnail_path, sequence) " +
             "VALUES (#{productId}, #{fileName}, #{filePath}, #{fileType}, #{thumbnailPath}, #{sequence})")
-    @Options(useGeneratedKeys = true, keyProperty = "imageId")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertProductImage(ProductImage productImage);
 
     @Select("SELECT * FROM product_images WHERE product_id = #{productId}")
@@ -43,8 +43,8 @@ public interface ProductMapper {
     Optional<Product> selectProductWithImagesById(Long id);
 
     List<Product> selectAllProduct(@Param("sortOrder") String sortOrder,
-                             @Param("offset") int offset,
-                             @Param("limit") int limit);
+                                   @Param("offset") int offset,
+                                   @Param("limit") int limit);
 
     @Select("SELECT count(*) FROM products")
     int countTotalProduct();

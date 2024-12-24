@@ -34,19 +34,19 @@ public class ProductServiceImpl implements ProductService {
         productMapper.insertProduct(product);
 
         // 새로 등록된 상품의 아이디
-        Long pno = product.getPno();
+        Long id = product.getId();
 
         // 새 파일 저장 및 썸네일 생성
         // 모든 썸네일의 확장자는 .jpg이다
         List<ProductImage> uploadedImages = saveNewProductImages(product, productRequest);
 
         // 응답 생성
-        return createProductAddResponse(pno, uploadedImages);
+        return createProductAddResponse(id, uploadedImages);
     }
 
     @Override
-    public ProductResponse findProductById(Long pno) {
-        Optional<Product> result = productMapper.selectProductById(pno);
+    public ProductResponse findProductById(Long id) {
+        Optional<Product> result = productMapper.selectProductById(id);
         Product product = result.orElseThrow();
 
         return modelMapper.map(product, ProductResponse.class);
@@ -57,22 +57,22 @@ public class ProductServiceImpl implements ProductService {
     public ProductAddResponse modifyProduct(ProductRequest productRequest) {
 
         // 상품 조회
-        Long pno = productRequest.getPno();
-        Optional<Product> savedProduct = productMapper.selectProductById(pno);
-        Product product = savedProduct.orElseThrow(() -> new NoSuchElementException("상품을 찾을 수 없습니다." + pno));
+        Long id = productRequest.getId();
+        Optional<Product> savedProduct = productMapper.selectProductById(id);
+        Product product = savedProduct.orElseThrow(() -> new NoSuchElementException("상품을 찾을 수 없습니다." + id));
 
         // 기존 상품 정보 업데이트
         updateProduct(product, productRequest);
 
         // 첨부파일 삭제 - image와 thumb을 각각 리스트에 담는다.
-        List<ProductImage> productImages = productMapper.selectImagesByProductId(pno);
+        List<ProductImage> productImages = productMapper.selectImagesByProductId(id);
         List<String> filePaths = productImages.stream()
                 .flatMap(p -> Arrays.stream(new String[]{p.getFilePath(), p.getThumbnailPath()}))
                 .filter(Objects::nonNull) // null 제외
                 .toList();
         customFileUtil.deleteFiles(filePaths);
         // 기존 이미지 삭제
-        productMapper.deleteImagesByProductId(pno);
+        productMapper.deleteImagesByProductId(id);
 
 
         // 새 파일 저장 및 썸네일 생성
@@ -80,21 +80,21 @@ public class ProductServiceImpl implements ProductService {
         List<ProductImage> uploadedImages = saveNewProductImages(product, productRequest);
 
         // 응답 생성
-        return createProductAddResponse(pno, uploadedImages);
+        return createProductAddResponse(id, uploadedImages);
     }
 
     @Override
-    public void removeProduct(Long pno) {
+    public void removeProduct(Long id) {
 
         // 첨부파일 삭제
-        List<ProductImage> productImages = productMapper.selectImagesByProductId(pno);
+        List<ProductImage> productImages = productMapper.selectImagesByProductId(id);
         List<String> files = productImages.stream().map(ProductImage::getFilePath).toList();
         customFileUtil.deleteFiles(files);
         // 기존 이미지 삭제
-        productMapper.deleteImagesByProductId(pno);
+        productMapper.deleteImagesByProductId(id);
 
         // 상품 삭제
-        productMapper.deleteProductById(pno);
+        productMapper.deleteProductById(id);
 
     }
 
@@ -118,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductImage> uploadedImages = customFileUtil.saveFiles(multipartFiles);
 
         for (ProductImage productImage : uploadedImages) {
-            productImage.setProductPno(product.getPno());
+            productImage.setProductId(product.getId());
             productMapper.insertProductImage(productImage);
         }
 
@@ -126,14 +126,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // 응답 객체 생성
-    private ProductAddResponse createProductAddResponse(Long pno, List<ProductImage> uploadedImages) {
+    private ProductAddResponse createProductAddResponse(Long id, List<ProductImage> uploadedImages) {
         // 첨부된 파일명 추출
         List<String> savedFileNames = uploadedImages.stream()
                 .map(image -> image.getFileName().substring(image.getFileName().lastIndexOf("_") + 1))
                 .toList();
 
         return ProductAddResponse.builder()
-                .pno(pno)
+                .id(id)
                 .uploadFileNames(savedFileNames)
                 .build();
     }

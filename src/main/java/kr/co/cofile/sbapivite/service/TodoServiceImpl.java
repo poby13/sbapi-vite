@@ -1,11 +1,11 @@
 package kr.co.cofile.sbapivite.service;
 
-import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.dto.PageRequest;
 import kr.co.cofile.sbapivite.dto.PageResponse;
 import kr.co.cofile.sbapivite.dto.TodoRequest;
 import kr.co.cofile.sbapivite.dto.TodoResponse;
 import kr.co.cofile.sbapivite.entity.Todo;
+import kr.co.cofile.sbapivite.enums.SortOrder;
 import kr.co.cofile.sbapivite.mapper.TodoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,38 +34,38 @@ public class TodoServiceImpl implements TodoService {
 
         todoMapper.insertTodo(todo);
 
-        return todo.getTno();
+        return todo.getId();
     }
 
     @Override
-    public TodoResponse findTodoById(Long tno) {
+    public TodoResponse findTodoById(Long id) {
 
-        Optional<Todo> result = todoMapper.selectTodoById(tno);
+        Optional<Todo> result = todoMapper.selectTodoById(id);
         Todo todo = result.orElseThrow();
 
         return modelMapper.map(todo, TodoResponse.class);
     }
 
     @Override
-    public void modifyTodo(Long tno, TodoRequest todoRequest) {
+    public void modifyTodo(Long id, TodoRequest todoRequest) {
 
         Todo todo = modelMapper.map(todoRequest, Todo.class);
-        todo.setTno(tno);
+        todo.setId(id);
 
         todoMapper.updateTodo(todo);
     }
 
     @Override
-    public void removeTodo(Long tno) {
+    public void removeTodo(Long id) {
 
-        todoMapper.deleteTodoById(tno);
+        todoMapper.deleteTodoById(id);
     }
 
     @Override
     public PageResponse<TodoResponse> listTodo(PageRequest pageRequest) {
         // Enum을 String으로 처리
         List<Todo> todos = todoMapper.selectAllTodo(pageRequest.getSortOrder().name(), pageRequest.getOffset(), pageRequest.getSize());
-        List<TodoResponse> todoResponses =  todos.stream()
+        List<TodoResponse> todoResponses = todos.stream()
                 .map(todo -> modelMapper.map(todo, TodoResponse.class))
                 .toList();
 

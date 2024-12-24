@@ -8,9 +8,13 @@ import kr.co.cofile.sbapivite.dto.TodoResponse;
 public interface TodoService {
 
     Long addTodo(TodoRequest todoRequest);
+
     TodoResponse findTodoById(Long tno);
+
     void modifyTodo(Long tno, TodoRequest todoRequest);
+
     void removeTodo(Long tno);
+
     PageResponse<TodoResponse> listTodo(PageRequest pageRequest);
 
 }

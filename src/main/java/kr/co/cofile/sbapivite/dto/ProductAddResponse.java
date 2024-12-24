@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductAddResponse {
 
-    private Long pno;
     List<String> uploadFileNames;
+    private Long id;
 
 }

@@ -1,7 +1,10 @@
 package kr.co.cofile.sbapivite.dto;
 
 import kr.co.cofile.sbapivite.entity.ProductImage;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductResponse {
 
-    private Long pno;
+    private Long id;
     private String pname;
     private int price;
     private String pdesc;
