@@ -28,7 +28,7 @@ public class Product {
 
     public void addImage(ProductImage image) {
         image.setSequence(this.productImages.size()); // 현재 파일의 갯수를 추가 순서로 사용
-        productImages.add(image);
+        this.productImages.add(image);
     }
 
     public void clearList() {

@@ -1,6 +1,6 @@
 package kr.co.cofile.sbapivite;
 
-import kr.co.cofile.sbapivite.dto.Member;
+import kr.co.cofile.sbapivite.entity.Member;
 import kr.co.cofile.sbapivite.mapper.MemberMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
