@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite.entity;
 
+import kr.co.cofile.sbapivite.enums.MemberRole;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class Member {
     private boolean enabled;
 
     @Builder.Default
-    private List<Role> roles = new ArrayList<>();
+    private List<MemberRole> memberRoles = new ArrayList<>();
 
+    public void addRole(MemberRole role) {
+        memberRoles.add(role);
+    }
 }

@@ -1,5 +1,6 @@
 package kr.co.cofile.sbapivite.entity;
 
+import kr.co.cofile.sbapivite.enums.MemberRole;
 import lombok.*;
 
 @Getter
@@ -10,6 +11,6 @@ import lombok.*;
 public class Role {
 
     private Long id;
-    private String name;
+    private MemberRole roleName;
 
 }
